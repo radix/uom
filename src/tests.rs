@@ -370,6 +370,70 @@ macro_rules! test {
             quickcheck! {
                 #[cfg(feature = "std")]
                 #[allow(trivial_casts)]
+                fn exp(v: $V) -> bool {
+                    v.exp() == TLength::new::<meter>(v).exp().get(meter)
+                }
+            }
+
+            quickcheck! {
+                #[cfg(feature = "std")]
+                #[allow(trivial_casts)]
+                fn exp2(v: $V) -> bool {
+                    v.exp2() == TLength::new::<meter>(v).exp2().get(meter)
+                }
+            }
+
+            quickcheck! {
+                #[cfg(feature = "std")]
+                #[allow(trivial_casts)]
+                fn ln(v: $V) -> TestResult {
+                    if v < 0.0 {
+                        return TestResult::discard();
+                    }
+
+                    TestResult::from_bool(v.ln() == TLength::new::<meter>(v).ln().get(meter))
+                }
+            }
+
+            quickcheck! {
+                #[cfg(feature = "std")]
+                #[allow(trivial_casts)]
+                fn log(v: $V, b: $V) -> TestResult {
+                    if v < 0.0 || b < 0.0 {
+                        return TestResult::discard();
+                    }
+
+                    TestResult::from_bool(v.log(b) == TLength::new::<meter>(v).log(b).get(meter))
+                }
+            }
+
+            quickcheck! {
+                #[cfg(feature = "std")]
+                #[allow(trivial_casts)]
+                fn log2(v: $V) -> TestResult {
+                    if v < 0.0 {
+                        return TestResult::discard();
+                    }
+
+                    TestResult::from_bool(v.log2() == TLength::new::<meter>(v).log2().get(meter))
+                }
+            }
+
+            quickcheck! {
+                #[cfg(feature = "std")]
+                #[allow(trivial_casts)]
+                fn log10(v: $V) -> TestResult {
+                    if v < 0.0 {
+                        return TestResult::discard();
+                    }
+
+                    TestResult::from_bool(v.log10() == TLength::new::<meter>(v).log10().get(meter))
+                }
+            }
+
+            quickcheck! {
+                #[cfg(feature = "std")]
+                #[allow(trivial_casts)]
                 fn max(l: $V, r: $V) -> bool {
                     l.max(r) == TLength::new::<meter>(l).max(TLength::new::<meter>(r)).get(meter)
                 }

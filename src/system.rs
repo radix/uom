@@ -586,6 +586,72 @@ macro_rules! system {
                         }
                     }
 
+                    /// Returns `e^(self)`, (the exponential function).
+                    #[cfg(feature = "std")]
+                    #[inline(always)]
+                    pub fn exp(self) -> Self {
+                        Quantity {
+                            dimension: $crate::stdlib::marker::PhantomData,
+                            units: $crate::stdlib::marker::PhantomData,
+                            value: self.value.exp(),
+                        }
+                    }
+
+                    /// Returns `2^(self)`.
+                    #[cfg(feature = "std")]
+                    #[inline(always)]
+                    pub fn exp2(self) -> Self {
+                        Quantity {
+                            dimension: $crate::stdlib::marker::PhantomData,
+                            units: $crate::stdlib::marker::PhantomData,
+                            value: self.value.exp2(),
+                        }
+                    }
+
+                    /// Returns the natural logarithm of the number.
+                    #[cfg(feature = "std")]
+                    #[inline(always)]
+                    pub fn ln(self) -> Self {
+                        Quantity {
+                            dimension: $crate::stdlib::marker::PhantomData,
+                            units: $crate::stdlib::marker::PhantomData,
+                            value: self.value.ln(),
+                        }
+                    }
+
+                    /// Returns the logarithm of the number with respect to an abritrary base.
+                    #[cfg(feature = "std")]
+                    #[inline(always)]
+                    pub fn log(self, base: $V) -> Self {
+                        Quantity {
+                            dimension: $crate::stdlib::marker::PhantomData,
+                            units: $crate::stdlib::marker::PhantomData,
+                            value: self.value.log(base),
+                        }
+                    }
+
+                    /// Returns the base 2 logarithm of the number.
+                    #[cfg(feature = "std")]
+                    #[inline(always)]
+                    pub fn log2(self) -> Self {
+                        Quantity {
+                            dimension: $crate::stdlib::marker::PhantomData,
+                            units: $crate::stdlib::marker::PhantomData,
+                            value: self.value.log2(),
+                        }
+                    }
+
+                    /// Returns the base 10 logarithm of the number.
+                    #[cfg(feature = "std")]
+                    #[inline(always)]
+                    pub fn log10(self) -> Self {
+                        Quantity {
+                            dimension: $crate::stdlib::marker::PhantomData,
+                            units: $crate::stdlib::marker::PhantomData,
+                            value: self.value.log10(),
+                        }
+                    }
+
                     /// Returns the maximum of the two quantities.
                     #[cfg(feature = "std")]
                     #[inline(always)]
