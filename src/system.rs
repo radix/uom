@@ -1012,11 +1012,81 @@ macro_rules! quantity {
         }
         impl { $($impl_block:tt)* }
     ) => {
-        $(#[$dim_attr])*
-        pub type Dimension = super::$system<$($crate::typenum::$dimension),+>;
-
         $(#[$quantity_attr])*
         pub type $quantity<U, V> = super::Quantity<Dimension, U, V>;
+
+        quantity! {
+            @quantity
+            $(#[$quantity_attr])* quantity: $quantity; $description;
+            $(#[$dim_attr])* dimension: $system<$($dimension),+>;
+            units {
+                $($(#[$unit_attr])* @$unit: $conversion; $abbreviation, $singular, $plural;)+
+            }
+            impl { $($impl_block)* }
+        }
+    };
+    (
+        $(#[$quantity_attr:meta])* explicit_quantity: $quantity:ident; $description:expr;
+        $(#[$dim_attr:meta])* dimension: $system:ident<$($dimension:ident),+>;
+        units {
+            $($(#[$unit_attr:meta])* @$unit:ident: $conversion:expr;
+                $abbreviation:expr, $singular:expr, $plural:expr;)+
+        }
+    ) => {
+        quantity! {
+            $(#[$quantity_attr])* explicit_quantity: $quantity; $description;
+            $(#[$dim_attr])* dimension: $system<$($dimension),+>;
+            units {
+                $($(#[$unit_attr])* @$unit: $conversion; $abbreviation, $singular, $plural;)+
+            }
+            impl {}
+        }
+    };
+    (
+        $(#[$quantity_attr:meta])* explicit_quantity: $quantity:ident; $description:expr;
+        $(#[$dim_attr:meta])* dimension: $system:ident<$($dimension:ident),+>;
+        units {
+            $($(#[$unit_attr:meta])* @$unit:ident: $conversion:expr;
+                $abbreviation:expr, $singular:expr, $plural:expr;)+
+        }
+        impl { $($impl_block:tt)* }
+    ) => {
+        $(#[$quantity_attr])*
+        #[derive(Copy, Clone)]
+        pub struct $quantity<U, V>
+        where
+            U: super::Units<Dimension, V>,
+        {
+            /// Quantity dimension. See [`Dimension`](./trait.Dimension.html).
+            pub dimension: $crate::stdlib::marker::PhantomData<Dimension>,
+            /// Quantity base units. See [`Units`](./trait.Units.html).
+            pub units: $crate::stdlib::marker::PhantomData<U>,
+            /// Quantity value stored in the base units for the quantity.
+            pub value: V,
+        }
+
+        quantity! {
+            @quantity
+            $(#[$quantity_attr])* quantity: $quantity; $description;
+            $(#[$dim_attr])* dimension: $system<$($dimension),+>;
+            units {
+                $($(#[$unit_attr])* @$unit: $conversion; $abbreviation, $singular, $plural;)+
+            }
+            impl { $($impl_block)* }
+        }
+    };
+    (
+        @quantity
+        $(#[$quantity_attr:meta])* quantity: $quantity:ident; $description:expr;
+        $(#[$dim_attr:meta])* dimension: $system:ident<$($dimension:ident),+>;
+        units {
+            $($(#[$unit_attr:meta])* @$unit:ident: $conversion:expr;
+                $abbreviation:expr, $singular:expr, $plural:expr;)+
+        }
+        impl { $($impl_block:tt)* }
+    ) => {
+        $(#[$dim_attr])*
+        pub type Dimension = super::$system<$($crate::typenum::$dimension),+>;
 
         /// Marker trait to identify measurement units for the quantity. See
         /// [`Unit`](../trait.Unit.html).
@@ -1149,6 +1219,7 @@ macro_rules! quantity {
         impl_quantity!(f32);
         #[cfg(feature = "f64")]
         impl_quantity!(f64);
+
     };
     (@unit $(#[$unit_attr:meta])+ @$unit:ident) => {
         $(#[$unit_attr])*

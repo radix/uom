@@ -30,6 +30,7 @@ system! {
         length::Length,
         luminous_intensity::LuminousIntensity,
         mass::Mass,
+        temperature_interval::TemperatureInterval,
         thermodynamic_temperature::ThermodynamicTemperature,
         time::Time,
         velocity::Velocity,
