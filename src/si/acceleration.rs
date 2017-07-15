@@ -1,5 +1,5 @@
 //! Acceleration (base unit meter per second<sup>2</sup>, m<sup>1</sup> · s<sup>-2</sup>).
-   
+
 quantity! {
     /// Acceleration (base unit meter per second<sup>2</sup>, m<sup>1</sup> · s<sup>-2</sup>).
     quantity: Acceleration; "acceleration";
