@@ -21,7 +21,7 @@ coveralls = { repository = "iliekturtles/uom" }
 maintenance = { status = "actively-developed" }
 
 [dependencies]
-num = "0.1"
+num = {version = "0.1", default-features = false }
 serde = { version = "1.0", optional = true, default-features = false }
 typenum = "1.9.0"
 
