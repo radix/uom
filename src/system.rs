@@ -860,57 +860,53 @@ macro_rules! system {
             // }
         }
 
-        impl<D, Ul, Ur, V> $crate::lib::cmp::PartialEq<Quantity<D, Ur, V>> for Quantity<D, Ul, V>
+        impl<D, Ul, V> $crate::lib::cmp::PartialEq for Quantity<D, Ul, V>
         where
             D: Dimension + ?Sized,
             Ul: Units<V> + ?Sized,
-            Ur: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V>,
         {
             #[inline(always)]
-            fn eq(&self, other: &Quantity<D, Ur, V>) -> bool {
-                self.value == change_base::<D, Ul, Ur, V>(&other.value)
+            fn eq(&self, other: &Self) -> bool {
+                self.value == other.value
             }
 
             #[inline(always)]
-            fn ne(&self, other: &Quantity<D, Ur, V>) -> bool {
-                self.value != change_base::<D, Ul, Ur, V>(&other.value)
+            fn ne(&self, other: &Self) -> bool {
+                self.value != other.value
             }
         }
 
-        impl<D, Ul, Ur, V> $crate::lib::cmp::PartialOrd<Quantity<D, Ur, V>> for Quantity<D, Ul, V>
+        impl<D, Ul, V> $crate::lib::cmp::PartialOrd for Quantity<D, Ul, V>
         where
             D: Dimension + ?Sized,
             Ul: Units<V> + ?Sized,
-            Ur: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::cmp::PartialOrd,
         {
             #[inline(always)]
-            fn partial_cmp(
-                &self, other: &Quantity<D, Ur, V>
-            ) -> Option<$crate::lib::cmp::Ordering>
+            fn partial_cmp(&self, other: &Self) -> Option<$crate::lib::cmp::Ordering>
             {
-                self.value.partial_cmp(&change_base::<D, Ul, Ur, V>(&other.value))
+                self.value.partial_cmp(&other.value)
             }
 
             #[inline(always)]
-            fn lt(&self, other: &Quantity<D, Ur, V>) -> bool {
-                self.value.lt(&change_base::<D, Ul, Ur, V>(&other.value))
+            fn lt(&self, other: &Self) -> bool {
+                self.value.lt(&other.value)
             }
 
             #[inline(always)]
-            fn le(&self, other: &Quantity<D, Ur, V>) -> bool {
-                self.value.le(&change_base::<D, Ul, Ur, V>(&other.value))
+            fn le(&self, other: &Self) -> bool {
+                self.value.le(&other.value)
             }
 
             #[inline(always)]
-            fn gt(&self, other: &Quantity<D, Ur, V>) -> bool {
-                self.value.gt(&change_base::<D, Ul, Ur, V>(&other.value))
+            fn gt(&self, other: &Self) -> bool {
+                self.value.gt(&other.value)
             }
 
             #[inline(always)]
-            fn ge(&self, other: &Quantity<D, Ur, V>) -> bool {
-                self.value.ge(&change_base::<D, Ul, Ur, V>(&other.value))
+            fn ge(&self, other: &Self) -> bool {
+                self.value.ge(&other.value)
             }
         }
 
