@@ -32,7 +32,8 @@ serde_json = "1.0"
 static_assertions = "0.2.5"
 
 [features]
-default = ["f32", "f64", "si", "std"]
+default = ["autoconvert", "f32", "f64", "si", "std"]
+autoconvert = []
 usize = []
 u8 = []
 u16 = []

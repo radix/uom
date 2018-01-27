@@ -12,6 +12,9 @@
 ## [Unreleased]
 
 ### Added
+ * [#54](https://github.com/iliekturtles/uom/issues/54) Add an `autoconvert` feature, which
+   enables operations on heterogenous Quantity types (with the same measurement unit). Enabled by
+   default.
  * [#16](https://github.com/iliekturtles/uom/issues/16) Implement `Default`.
  * [#17](https://github.com/iliekturtles/uom/issues/17) Implement `PartialEq`.
  * [#50](https://github.com/iliekturtles/uom/issues/50) Implement `Eq`.

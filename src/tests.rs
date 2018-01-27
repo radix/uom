@@ -909,6 +909,7 @@ mod quantities_macro {
         mod k { Q!(tests, super::V, (kilometer, kilogram)); }
 
         quickcheck! {
+            #[cfg(feature = "autoconvert")]
             #[allow(trivial_casts)]
             fn eq(l: A<V>, r: A<V>) -> bool {
                 let a = *l == *r;
@@ -920,6 +921,7 @@ mod quantities_macro {
                 a == b && a == c
             }
 
+            #[cfg(feature = "autoconvert")]
             #[allow(trivial_casts)]
             fn ne(l: A<V>, r: A<V>) -> bool {
                 let a = *l != *r;
@@ -931,6 +933,7 @@ mod quantities_macro {
                 a == b && a == c
             }
 
+            #[cfg(feature = "autoconvert")]
             #[allow(trivial_casts)]
             fn partial_cmp(l: A<V>, r: A<V>) -> bool {
                 let a = (*l).partial_cmp(&*r);
@@ -942,6 +945,7 @@ mod quantities_macro {
                 a == b && a == c
             }
 
+            #[cfg(feature = "autoconvert")]
             #[allow(trivial_casts)]
             fn lt(l: A<V>, r: A<V>) -> bool {
                 let a = (*l).lt(&*r);
@@ -953,6 +957,7 @@ mod quantities_macro {
                 a == b && a == c
             }
 
+            #[cfg(feature = "autoconvert")]
             #[allow(trivial_casts)]
             fn le(l: A<V>, r: A<V>) -> bool {
                 let a = (*l).le(&*r);
@@ -964,6 +969,7 @@ mod quantities_macro {
                 a == b && a == c
             }
 
+            #[cfg(feature = "autoconvert")]
             #[allow(trivial_casts)]
             fn gt(l: A<V>, r: A<V>) -> bool {
                 let a = (*l).gt(&*r);
@@ -975,6 +981,7 @@ mod quantities_macro {
                 a == b && a == c
             }
 
+            #[cfg(feature = "autoconvert")]
             #[allow(trivial_casts)]
             fn ge(l: A<V>, r: A<V>) -> bool {
                 let a = (*l).ge(&*r);
@@ -1022,6 +1029,7 @@ mod quantities_macro {
             }
 
             quickcheck! {
+                #[cfg(feature = "autoconvert")]
                 #[allow(trivial_casts)]
                 fn add(l: A<V>, r: A<V>) -> bool {
                     Test::approx_eq(&k::Length::new::<meter>(&*l + &*r),
@@ -1029,6 +1037,7 @@ mod quantities_macro {
                             + f::Length::new::<meter>((*r).clone())))
                 }
 
+                #[cfg(feature = "autoconvert")]
                 #[allow(trivial_casts)]
                 fn sub(l: A<V>, r: A<V>) -> bool {
                     Test::approx_eq(&k::Length::new::<meter>(&*l - &*r),
@@ -1036,6 +1045,7 @@ mod quantities_macro {
                             - f::Length::new::<meter>((*r).clone())))
                 }
 
+                #[cfg(feature = "autoconvert")]
                 #[allow(trivial_casts)]
                 fn mul_quantity(l: A<V>, r: A<V>) -> bool {
                     Test::approx_eq(&/*Area::new::<square_meter>*/(&*l * &*r),
@@ -1049,6 +1059,7 @@ mod quantities_macro {
                                 * f::Mass::new::<kilogram>((*r).clone())).value)
                 }
 
+                #[cfg(feature = "autoconvert")]
                 #[allow(trivial_casts)]
                 fn div_quantity(l: A<V>, r: A<V>) -> TestResult {
                     if *r == V::zero() {
@@ -1062,6 +1073,8 @@ mod quantities_macro {
                                 / f::Length::new::<meter>((*r).clone())).value))
                 }
 
+
+                #[cfg(feature = "autoconvert")]
                 #[allow(trivial_casts)]
                 fn rem(l: A<V>, r: A<V>) -> TestResult {
                     if *r == V::zero() {
@@ -1087,6 +1100,7 @@ mod quantities_macro {
             mod k { Q!(tests, super::V, (kilometer, kilogram)); }
 
             quickcheck! {
+                #[cfg(feature = "autoconvert")]
                 #[allow(trivial_casts)]
                 fn add_assign(l: A<V>, r: A<V>) -> bool {
                     let mut f = *l;
@@ -1098,6 +1112,7 @@ mod quantities_macro {
                     Test::approx_eq(&k::Length::new::<meter>(f), &v)
                 }
 
+                #[cfg(feature = "autoconvert")]
                 #[allow(trivial_casts)]
                 fn sub_assign(l: A<V>, r: A<V>) -> bool {
                     let mut f = *l;
@@ -1109,6 +1124,7 @@ mod quantities_macro {
                     Test::approx_eq(&k::Length::new::<meter>(f), &v)
                 }
 
+                #[cfg(feature = "autoconvert")]
                 #[allow(trivial_casts)]
                 fn rem_assign(l: A<V>, r: A<V>) -> TestResult {
                     if *r == V::zero() {
